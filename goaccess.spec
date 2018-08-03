@@ -4,7 +4,7 @@
 #
 Name     : goaccess
 Version  : 1.2
-Release  : 1
+Release  : 2
 URL      : https://tar.goaccess.io/goaccess-1.2.tar.gz
 Source0  : https://tar.goaccess.io/goaccess-1.2.tar.gz
 Summary  : No detailed summary available
@@ -14,6 +14,7 @@ Requires: goaccess-bin
 Requires: goaccess-license
 Requires: goaccess-man
 BuildRequires : ncurses-dev
+BuildRequires : openssl-dev
 
 %description
 What is it?
@@ -64,8 +65,10 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533319237
-%configure --disable-static
+export SOURCE_DATE_EPOCH=1533319395
+%configure --disable-static --enable-utf8 \
+--with-openssl \
+--disable-bzip
 make  %{?_smp_mflags}
 
 %check
@@ -76,7 +79,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1533319237
+export SOURCE_DATE_EPOCH=1533319395
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/goaccess
 cp COPYING %{buildroot}/usr/share/doc/goaccess/COPYING
