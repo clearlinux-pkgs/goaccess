@@ -4,7 +4,7 @@
 #
 Name     : goaccess
 Version  : 1.2
-Release  : 2
+Release  : 3
 URL      : https://tar.goaccess.io/goaccess-1.2.tar.gz
 Source0  : https://tar.goaccess.io/goaccess-1.2.tar.gz
 Summary  : No detailed summary available
