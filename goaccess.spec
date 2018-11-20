@@ -4,17 +4,25 @@
 #
 Name     : goaccess
 Version  : 1.2
-Release  : 3
+Release  : 4
 URL      : https://tar.goaccess.io/goaccess-1.2.tar.gz
 Source0  : https://tar.goaccess.io/goaccess-1.2.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
-Requires: goaccess-bin
-Requires: goaccess-license
-Requires: goaccess-man
+Requires: goaccess-bin = %{version}-%{release}
+Requires: goaccess-license = %{version}-%{release}
+Requires: goaccess-man = %{version}-%{release}
+BuildRequires : automake
+BuildRequires : automake-dev
+BuildRequires : gettext-bin
+BuildRequires : libtool
+BuildRequires : libtool-dev
+BuildRequires : m4
 BuildRequires : ncurses-dev
 BuildRequires : openssl-dev
+BuildRequires : pkg-config-dev
+Patch1: 0001-autoconf-use-non-deprecated-functions-for-lssl-lcryp.patch
 
 %description
 What is it?
@@ -25,8 +33,8 @@ that runs in a terminal in *nix systems or through your browser.
 %package bin
 Summary: bin components for the goaccess package.
 Group: Binaries
-Requires: goaccess-license
-Requires: goaccess-man
+Requires: goaccess-license = %{version}-%{release}
+Requires: goaccess-man = %{version}-%{release}
 
 %description bin
 bin components for the goaccess package.
@@ -35,7 +43,7 @@ bin components for the goaccess package.
 %package doc
 Summary: doc components for the goaccess package.
 Group: Documentation
-Requires: goaccess-man
+Requires: goaccess-man = %{version}-%{release}
 
 %description doc
 doc components for the goaccess package.
@@ -59,14 +67,15 @@ man components for the goaccess package.
 
 %prep
 %setup -q -n goaccess-1.2
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533319395
-%configure --disable-static --enable-utf8 \
+export SOURCE_DATE_EPOCH=1542744803
+%reconfigure --disable-static --enable-utf8 \
 --with-openssl \
 --disable-bzip
 make  %{?_smp_mflags}
@@ -79,10 +88,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1533319395
+export SOURCE_DATE_EPOCH=1542744803
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/goaccess
-cp COPYING %{buildroot}/usr/share/doc/goaccess/COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/goaccess
+cp COPYING %{buildroot}/usr/share/package-licenses/goaccess/COPYING
 %make_install
 
 %files
@@ -97,9 +106,9 @@ cp COPYING %{buildroot}/usr/share/doc/goaccess/COPYING
 %doc /usr/share/doc/goaccess/*
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/goaccess/COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/goaccess/COPYING
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/goaccess.1
