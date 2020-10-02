@@ -1,2 +1,3 @@
+Configure miss: libintl_dgettext in -lintl
 Configure miss: ncursesw/ncurses.h
 Configure miss: floor
