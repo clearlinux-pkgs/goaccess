@@ -4,7 +4,7 @@
 #
 Name     : goaccess
 Version  : 1.4
-Release  : 6
+Release  : 7
 URL      : https://tar.goaccess.io/goaccess-1.4.tar.gz
 Source0  : https://tar.goaccess.io/goaccess-1.4.tar.gz
 Summary  : No detailed summary available
